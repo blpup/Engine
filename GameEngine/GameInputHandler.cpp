@@ -1,5 +1,8 @@
 #include "GameInputHandler.h"
-#include "MovementComponent.h"
+#include "GameObjectHandler.h"
+#include "PhysicsComponent.h"
+#include "GamePhysics.h"
+#include "GameObject.h"
 #include <iostream>
 using namespace GameEngine;
 void GameInputHandler::ButtonCallbackImpl(int key, int action)
@@ -10,21 +13,24 @@ void GameInputHandler::ButtonCallbackImpl(int key, int action)
 	}
 	for (size_t i = 0; i < Objects.size(); i++)
 	{
-		for (size_t j = 0; j < Objects[i]->GetKeyBindings().size(); j++)
+		MovementComponent movWrapper(Objects[i]);
+		for (size_t j = 0; j < movWrapper.GetKeyBindings().size(); j++)
 		{
-			if (key == Objects[i]->GetKeyBindings()[j].GLFWkey && action == GLFW_PRESS) {
-				Objects[i]->SetMovement(Objects[i]->GetKeyBindings()[j].direction, 1);
-				m_userInput = Objects[i]->GetKeyBindings()[j].direction;
+			if (key == movWrapper.GetKeyBindings()[j].GLFWkey && action == GLFW_PRESS) {
+				movWrapper.SetMovement(movWrapper.GetKeyBindings()[j].direction, 1);
+				Objects[i]->movement = movWrapper.GetMovement();
+				m_userInput = movWrapper.GetKeyBindings()[j].direction;
 			}
-			if (key == Objects[i]->GetKeyBindings()[j].GLFWkey && action == GLFW_RELEASE) {
-				Objects[i]->SetMovement(Objects[i]->GetKeyBindings()[j].direction, 0);
+			if (key == movWrapper.GetKeyBindings()[j].GLFWkey && action == GLFW_RELEASE) {
+				movWrapper.SetMovement(movWrapper.GetKeyBindings()[j].direction, 0);
+				Objects[i]->movement = movWrapper.GetMovement();
 			}
 		}
 	}
 
 }
 
-void GameInputHandler::AddMovementComponent(MovementComponent* component)
+void GameInputHandler::Add(MovementDef* component)
 {
 	Objects.push_back(component);
 }
@@ -36,8 +42,19 @@ Direction GameInputHandler::GetUserInput()
 
 void GameInputHandler::Render()
 {
+	GamePhysics& PhysicsHandler =  GamePhysics::GetInstance();
+	GameObjectHandler& ObjectHandler = GameObjectHandler::GetInstance();
+	
 	for (size_t i = 0; i < Objects.size(); i++)
 	{
-		Objects[i]->Move();
+		MovementComponent movWrapper(Objects[i]);
+		const int objectIndex = ObjectHandler.GetGameObjectIndex(movWrapper.getParentID());
+		PhysicsHandler.GetPhysicsObjectByParentId(movWrapper.getParentID())->move;
+		if (objectIndex < 0) {
+			continue;
+		};
+		GameObject GameObject(&ObjectHandler.GetGameObject(objectIndex));
+		movWrapper.Move(ObjectHandler.GetGameObject(objectIndex), PhysicsHandler.GetPhysicsObjectByParentId(movWrapper.getParentID())->move);
+		//GameObject.SetCoords()
 	}
 }

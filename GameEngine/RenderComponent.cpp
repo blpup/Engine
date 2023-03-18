@@ -1,29 +1,78 @@
 #include "RenderComponent.h"
 #include "GameRenderer.h"
 #include "GameObject.h"
+
 using namespace GameEngine;
 
-RenderComponent::RenderComponent(Vector2 position, Color3 color, std::vector<float> vertices, int zIndex, GLenum renderType, GameObject& object)
-	:m_object(object)
+
+
+RenderComponent::RenderComponent(const RenderObject* object):
+	m_color(object->color), m_renderType(object->renderType), m_vertices(object->vertices), m_zIndex(object->zIndex),
+	m_parentId(object->parentId),m_id(object->id)
 {
-	GameRenderer& RendererSystem = GameRenderer::GetInstance();
-	m_RenderObject.m_color = color;
-	m_RenderObject.m_position = position;
-	m_RenderObject.m_zIndex = zIndex;
-	m_RenderObject.m_vertices = vertices;
-	m_RenderObject.m_renderType = renderType;
-	m_RenderObject.m_ID = m_object.GetID();
-	RendererSystem.Add(this);
 }
 
-RenderComponent::RenderObject RenderComponent::GetRenderObject() const
+RenderComponent::RenderComponent(const RenderObject* object, uint64_t id):
+	m_color(object->color), m_renderType(object->renderType),
+	m_vertices(object->vertices), m_zIndex(object->zIndex), m_parentId(id)
 {
-	return m_RenderObject;
 }
 
-GameObject& GameEngine::RenderComponent::GetAttachedObject() const
+uint64_t RenderComponent::getID()
 {
-	return m_object;
+	return m_id;
 }
+
+Color3 RenderComponent::getColor()
+{
+	return m_color;
+}
+uint64_t GameEngine::RenderComponent::getParentID()
+{
+	return m_parentId;
+}
+void GameEngine::RenderComponent::setParentID(uint64_t value)
+{
+	m_parentId = value;
+	
+}
+void RenderComponent::setColor(Color3 value)
+{
+	m_color = value;
+}
+std::vector<float> RenderComponent::getVertices()
+{
+	return m_vertices;
+}
+
+void RenderComponent::setVertices(std::vector<float> value)
+{
+	m_vertices = value;
+}
+
+int RenderComponent::getZIndex()
+{
+	return m_zIndex;
+}
+
+void RenderComponent::setZIndex(int value)
+{
+	m_zIndex = value;
+}
+GLenum RenderComponent::getRenderType()
+{
+	return m_renderType;
+}
+
+void RenderComponent::setRenderType(GLenum value)
+{
+	m_renderType = value;
+}
+
+void GameEngine::RenderComponent::instantiate(RenderObject* object)
+{
+	GameRenderer::GetInstance().Add(object);
+}
+
 
 

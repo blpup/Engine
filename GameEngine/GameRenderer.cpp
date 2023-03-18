@@ -1,4 +1,5 @@
 #include "GameRenderer.h"
+#include "GameObjectHandler.h"
 #include "RenderComponent.h"
 #include "GameObject.h";
 #include <GLFW/glfw3.h>
@@ -11,33 +12,39 @@ GameRenderer& GameRenderer::GetInstance()
     return instance;
 }
 
-void GameRenderer::Add(RenderComponent* component)
+void GameRenderer::Add(RenderObject* object)
 {
-    Objects.push_back(component);
+    Objects.push_back(object);
     if (Objects.size() > 1) {
         Sort();
     }
 }
 
-void GameRenderer::Remove(RenderComponent* component)
+void GameRenderer::Remove(RenderObject* object)
 {
-    int location = component->GetRenderObject().m_ID;
-    Objects.erase(Objects.begin() + (location-1));
+    RenderComponent RenderObject(object);
+    //int location = RenderObject.getID();
+    //Objects.erase(Objects.begin() + (location-1));
 }
 
 void GameRenderer::Render()
 {
+    GameObjectHandler& ObjectHandler = GameObjectHandler::GetInstance();
     for (size_t i = 0; i < Objects.size(); i++)
     {
-        RenderComponent::RenderObject CurrentObject = Objects[i]->GetRenderObject();
-        Vector2 position = Objects[i]->GetAttachedObject().GetCoords();
-        glColor3f(CurrentObject.m_color.r, CurrentObject.m_color.g, CurrentObject.m_color.b);
-        glBegin(CurrentObject.m_renderType);
+        RenderComponent renWrapper(Objects[i]);
+        const size_t objectIndex = ObjectHandler.GetGameObjectIndex(renWrapper.getParentID());
+        if (objectIndex < 0) {
+            continue;
+        }
+        GameObject GameObject1(&ObjectHandler.GetGameObject(objectIndex));
+        Vector2 position = GameObject1.GetCoords();
+        glColor3f(renWrapper.getColor().r, renWrapper.getColor().g, renWrapper.getColor().b);
+        glBegin(renWrapper.getRenderType());
         
-        for (size_t i = 0; i < CurrentObject.m_vertices.size(); i+=2)
+        for (size_t i = 0; i < renWrapper.getVertices().size(); i += 2)
         {
-            //std::cout << CurrentObject.m_vertices[i] << CurrentObject.m_vertices[i + 1] << std::endl;
-            glVertex2f(position.x + CurrentObject.m_vertices[i], position.y + CurrentObject.m_vertices[i + 1]);
+            glVertex2f(position.x + renWrapper.getVertices()[i], position.y + renWrapper.getVertices()[i + 1]);
         }
         glEnd();
 
@@ -51,10 +58,10 @@ int GameRenderer::GetSize()
 
 void GameRenderer::Sort()
 {
-    std::sort(Objects.begin(), Objects.end(), [](const RenderComponent* lhs, const RenderComponent* rhs) {
-        RenderComponent::RenderObject o1 = lhs->GetRenderObject();
-        RenderComponent::RenderObject o2 = rhs->GetRenderObject();
-        return o1.m_zIndex < o2.m_zIndex;
-        });
+    std::sort(Objects.begin(), Objects.end(), [](const RenderObject* lhs, const RenderObject* rhs) {
+        RenderComponent o1(lhs);
+        RenderComponent o2(rhs);
+        return o1.getZIndex() < o2.getZIndex();
+     });
 }
 

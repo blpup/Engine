@@ -12,5 +12,11 @@ namespace GameEngine {
 			x = xCoord;
 			y = yCoord;
 		}
+		Vector2 operator-(const Vector2& obj) {
+			Vector2 temp;
+			temp.x = x - obj.x;
+			temp.y = y - obj.y;
+			return temp;
+		}
 	};
 }

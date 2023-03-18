@@ -3,7 +3,9 @@ using namespace GameEngine;
 
 BoxComponent::BoxComponent()
 {
-	m_sizeMultiplier = 1;
+	m_sizeMultiplier = .1;
+
+	SetVertices({ -1.f * (m_sizeMultiplier / 2), -1.f * (m_sizeMultiplier / 2), 1.f * (m_sizeMultiplier / 2), -1.f * (m_sizeMultiplier / 2), 1.f * (m_sizeMultiplier / 2), 1.f * (m_sizeMultiplier / 2), -1.f * (m_sizeMultiplier / 2), 1.f * (m_sizeMultiplier / 2) });
 }
 
 BoxComponent::BoxComponent(float size)

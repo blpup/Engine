@@ -1,21 +1,19 @@
 #pragma once
 #include <vector>
+#include "RenderComponent.h"
 namespace GameEngine {
-	class GameObject;
-	class RenderComponent;
-
 	class GameRenderer {
 	public:
 		GameRenderer(GameRenderer& other) = delete;
 		void operator=(const GameRenderer&) = delete;
 		static GameRenderer& GetInstance();
-		void Add(RenderComponent* component);
-		void Remove(RenderComponent* component);
+		void Add(RenderObject* object);
+		void Remove(RenderObject* object);
 		void Render();
 		int GetSize();
 	private:
 		GameRenderer(void) {}
-		std::vector<RenderComponent*> Objects;
+		std::vector<RenderObject*> Objects;
 		void Sort();
 	};
 }

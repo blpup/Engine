@@ -2,7 +2,9 @@
 #include <vector>
 
 namespace GameEngine {
+	class UUID;
 	class GameObject;
+	struct GameObjectDef;
 
 	class GameObjectHandler
 	{
@@ -10,13 +12,14 @@ namespace GameEngine {
 		GameObjectHandler(GameObjectHandler& other) = delete;
 		void operator=(const GameObjectHandler&) = delete;
 		static GameObjectHandler& GetInstance();
-		void Add(GameObject* component);
+		void Add(GameObjectDef& component);
 		void Remove(GameObject* component);
 		void Render();
-		std::vector<GameObject*> GetObjects();
+		size_t GetGameObjectIndex(uint64_t id);
+		GameObjectDef& GetGameObject(size_t index);
 	private:
 		GameObjectHandler(void){}
-		std::vector<GameObject*> m_objects;
+		std::vector<GameObjectDef*> m_objects;
 	};
 }
 

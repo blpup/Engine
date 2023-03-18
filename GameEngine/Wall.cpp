@@ -11,18 +11,26 @@
 using namespace GameEngine;
 Wall::Wall()
 {
-	SetSpeed(0.01);
-	SetCoords(.05, -.9);
+	GameObject goWrapper(&m_gameObject);
+	RenderComponent renWrapper(&m_renderObject);
+	MovementComponent movWrapper(&m_movementObject);
+	PhysicsComponent phyWrapper(&m_physicsObject);
 	boxComponent = new BoxComponent(1.f, .1f);
-	renderComponent = new RenderComponent(GetCoords(), Color3(0,1,0), boxComponent->GetVertices(), 2, GL_QUADS, *this);
-	physicsComponent = new PhysicsComponent(Collision::CAN_COLLIDE, CollisionType::SOLID, boxComponent->GetMaxWidth(), boxComponent->GetMaxHeight(), *this);
-	std::vector<MovementComponent::Keybindings> bindings
+	m_renderObject.parentId = m_gameObject.id;
+	m_movementObject.parentId = m_gameObject.id;
+	m_physicsObject.parentId = m_gameObject.id;
+	m_renderObject.color = Color3(0.f, 0.0f, 1.0f);
+	m_renderObject.vertices = boxComponent->GetVertices();
+	m_physicsObject.height = 0.1f;
+	m_physicsObject.width = 1.0f;
+	m_movementObject.keybindings =
 	{
-		MovementComponent::Keybindings(Direction::UP,GLFW_KEY_I),
-		MovementComponent::Keybindings(Direction::DOWN,GLFW_KEY_K),
-		MovementComponent::Keybindings(Direction::LEFT,GLFW_KEY_J),
-		MovementComponent::Keybindings(Direction::RIGHT,GLFW_KEY_L)
+		Keybindings(Direction::UP,GLFW_KEY_I),
+		Keybindings(Direction::DOWN,GLFW_KEY_K),
+		Keybindings(Direction::LEFT,GLFW_KEY_J),
+		Keybindings(Direction::RIGHT,GLFW_KEY_L)
 	};
-	movementComponent = new MovementComponent(*this, bindings);
-	GameInputHandler::GetInstance().AddMovementComponent(movementComponent);
+	renWrapper.instantiate(&m_renderObject);
+	movWrapper.instantiate(&m_movementObject);
+	phyWrapper.instantiate(&m_physicsObject);
 }

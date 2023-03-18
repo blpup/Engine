@@ -1,16 +1,22 @@
 #include "MovementComponent.h"
-#include "PhysicsComponent.h"
-#include "GameObject.h"
+#include "GameInputHandler.h"
+#include "GameObjectHandler.h"
+
 using namespace GameEngine;
 
-MovementComponent::MovementComponent(GameObject& object, std::vector<Keybindings> keybindings)
-	:m_currentObject(object), m_keybindings(keybindings)
+MovementComponent::MovementComponent(const MovementDef* object)
+	:m_movement(object->movement), m_keybindings(object->keybindings), m_parentID(object->parentId)
 {
 }
 
 void MovementComponent::UpdatePosition(Vector2 coords)
 {
-	m_currentObject.SetCoords(coords.x, coords.y);
+	//m_currentObject.SetCoords(coords.x, coords.y);
+}
+
+uint64_t GameEngine::MovementComponent::getParentID()
+{
+	return m_parentID;
 }
 
 void MovementComponent::SetMovement(Direction direction, int movement)
@@ -29,32 +35,39 @@ void MovementComponent::SetMovement(Direction direction, int movement)
 	}
 }
 
-MovementComponent::Movement MovementComponent::GetMovement() const
+Movement MovementComponent::GetMovement() const
 {
 	return m_movement;
 }
 
-std::vector<MovementComponent::Keybindings> MovementComponent::GetKeyBindings() const
+std::vector<Keybindings> MovementComponent::GetKeyBindings() const
 {
 	return m_keybindings;
 }
 
-void MovementComponent::Move()
+void GameEngine::MovementComponent::instantiate(MovementDef* object)
 {
-	if (RegisteredPhysicsComponent == nullptr) {
-		GamePhysics& PhysicsSystem = GamePhysics::GetInstance();
-		RegisteredPhysicsComponent = PhysicsSystem.GetPhysicsComponentByID(m_currentObject.GetID());
+	GameInputHandler::GetInstance().Add(object);
+}
+
+void MovementComponent::Move(GameObjectDef& object, Movablitiy physicsMovability)
+{
+	//GameObject gameObject(&ObjectHandler.GetGameObject())
+	//if (RegisteredPhysicsComponent == nullptr) {
+	//	GamePhysics& PhysicsSystem = GamePhysics::GetInstance();
+		//RegisteredPhysicsComponent = PhysicsSystem.GetPhysicsComponentByID(m_currentObject.GetID());
+	//}
+	if (GetMovement().forward == 1 && physicsMovability.forward == 1) {
+		object.position.SetVector2(object.position.x, object.position.y + 0.005f);
 	}
-	if (GetMovement().forward == 1 && RegisteredPhysicsComponent->CanMove().forward == 1) {
-		UpdatePosition(Vector2(m_currentObject.GetCoords().x, m_currentObject.GetCoords().y + m_currentObject.GetSpeed()));
+	if (GetMovement().backward == 1 && physicsMovability.backward == 1) {
+		object.position.SetVector2(object.position.x, object.position.y - 0.005f);
 	}
-	if (GetMovement().backward == 1 && RegisteredPhysicsComponent->CanMove().backward == 1) {
-		UpdatePosition(Vector2(m_currentObject.GetCoords().x, m_currentObject.GetCoords().y - m_currentObject.GetSpeed()));
+	if (GetMovement().left == 1 && physicsMovability.left == 1) {
+		object.position.SetVector2(object.position.x - .005f, object.position.y);
 	}
-	if (GetMovement().left == 1 && RegisteredPhysicsComponent->CanMove().left == 1) {
-		UpdatePosition(Vector2(m_currentObject.GetCoords().x - m_currentObject.GetSpeed(), m_currentObject.GetCoords().y));
+	if (GetMovement().right == 1 && physicsMovability.right ==1) {
+		object.position.SetVector2(object.position.x + .005f, object.position.y);
 	}
-	if (GetMovement().right == 1 && RegisteredPhysicsComponent->CanMove().right == 1) {
-		UpdatePosition(Vector2(m_currentObject.GetCoords().x + m_currentObject.GetSpeed(), m_currentObject.GetCoords().y));
-	}
+	//RegisteredPhysicsComponent->CanMove().right == 1
 }

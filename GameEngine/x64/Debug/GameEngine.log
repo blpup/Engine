@@ -1,2 +1,3 @@
-﻿  AutoMovement.cpp
+﻿  GamePhysics.cpp
+C:\Users\Arthr\source\repos\GameEngine\GameEngine\GamePhysics.cpp(170): warning C4715: 'GameEngine::GamePhysics::Bisection': not all control paths return a value
   GameEngine.vcxproj -> C:\Users\Arthr\source\repos\GameEngine\x64\Debug\GameEngine.exe

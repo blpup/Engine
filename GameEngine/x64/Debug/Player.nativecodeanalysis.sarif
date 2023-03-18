@@ -1,0 +1,322 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GameEngine::GamePhysics::m_currentObject' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Arthr/source/repos/GameEngine/GameEngine/GamePhysics.h"
+                },
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 3,
+                  "endLine": 21,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GameEngine::GamePhysics::{ctor}",
+                  "decoratedName": "??0GamePhysics@GameEngine@@AEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GameEngine::GamePhysics::m_currentObject"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GameEngine::GamePhysics::m_targetObject' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Arthr/source/repos/GameEngine/GameEngine/GamePhysics.h"
+                },
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 3,
+                  "endLine": 21,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GameEngine::GamePhysics::{ctor}",
+                  "decoratedName": "??0GamePhysics@GameEngine@@AEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GameEngine::GamePhysics::m_targetObject"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GameEngine::RenderObject::parentId' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Arthr/source/repos/GameEngine/GameEngine/RenderComponent.h"
+                },
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 3,
+                  "endLine": 13,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GameEngine::RenderObject::{ctor}",
+                  "decoratedName": "??0RenderObject@GameEngine@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GameEngine::RenderObject::parentId"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GameEngine::MovementDef::parentId' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Arthr/source/repos/GameEngine/GameEngine/MovementComponent.h"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 2,
+                  "endLine": 25,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GameEngine::MovementDef::{ctor}",
+                  "decoratedName": "??0MovementDef@GameEngine@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GameEngine::MovementDef::parentId"
+          }
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.31.31104.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "commandLine": "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.31.31103\\bin\\HostX64\\x64\\c1xx.dll\" -ACf{1F7B090C-16DB-4822-966A-A93D26ED4681} -ACpmspft140.dll -Alint -D_PREFAST_ -D_AST_FE_ -Analyze -zm0x00007FF7D5A29CC0 -il C:\\Users\\Arthr\\AppData\\Local\\Temp\\_CL_e12da06fast -typedil -f Player.cpp -Ze -D_MSC_EXTENSIONS -Zp16 -pc \\:/ -D_MSC_VER=1931 -D_MSC_FULL_VER=193131104 -D_MSC_BUILD=0 -D_M_AMD64=100 -ZILP448 -D_M_X64=100 -D_WIN64 -D_WIN32 -GR -D_CPPRTTI -I C:\\Users\\Arthr\\source\\repos\\GameEngine\\Dependecies\\GLFW\\include -nologo -W 3 -diagnostics:column -D_GUARDOVERFLOW_CRT_ALLOCATORS=1 -Ot -DCODE_ANALYSIS -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -EHs -D_CPPUNWIND -EHc -D__MSVC_RUNTIME_CHECKS -RTCs -RTCu -MDd -D_DEBUG -D_MT -D_DLL -GS -D_M_FP_PRECISE -Zc:wchar_t -Zc:forScope -permissive- -Fox64\\Debug\\Player.obj -Fdx64\\Debug\\vc143.pdb -external:W 3 -Gd -analyze:projectdirectory C:\\Users\\Arthr\\source\\repos\\GameEngine\\GameEngine -analyze:rulesetdirectory ;C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Team Tools\\Static Analysis Tools\\\\Rule Sets; -analyze:ruleset C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Team Tools\\Static Analysis Tools\\Rule Sets\\NativeRecommendedRules.ruleset -analyze:quiet -analyze:plugin C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.31.31103\\bin\\HostX64\\x64\\EspXEngine.dll -FC -errorreport:prompt -I C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.31.31103\\include -I C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.31.31103\\atlmfc\\include -I C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\VS\\include -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um -external:I C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.31.31103\\include -I C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.31.31103\\include -external:I C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.31.31103\\atlmfc\\include -I C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.31.31103\\atlmfc\\include -external:I C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\VS\\include -I C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\VS\\include -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -external:I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um -I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um",
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Users/Arthr/source/repos/GameEngine/GameEngine/Shape.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "98b287de6f45285852cf9110c6a1dd4385e9bd286a19f03ee1e080a47c939be7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/shape.h"
+          },
+          "hashes": {
+            "sha-256": "d180e7ceedf2302384d0f06d63954153f697c5d479608b0a194ad96f0e2d50b1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/vector2.h"
+          },
+          "hashes": {
+            "sha-256": "231e244e2312a33f669e707c192728fc21a468625e40c3bb87e73407b7c68ff5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/Arthr/source/repos/GameEngine/GameEngine/RenderComponent.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "250850faa54733287d5b685678383c6b9bab56f38a0e0f69a9f1860d72f29424"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/Arthr/source/repos/GameEngine/GameEngine/GamePhysics.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "fa90b55516f2f3adc275ca9d14bb626ecdecc2952bdd2ff680019dd3ae35a58c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/Arthr/source/repos/GameEngine/GameEngine/RenderComponent.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "ca52c9b18f82b04447f402fd9201a44d9994a3a0b6781f7caad97407c2881a29"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/color3.h"
+          },
+          "hashes": {
+            "sha-256": "d9a1dfae9f23a6dd22a6a6509afea9afd89944b71a7fd150fed5221bc3ee6aa9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/boxcomponent.h"
+          },
+          "hashes": {
+            "sha-256": "0970d1894f30377891d61f100e602c4c9b79d61f02e9ff75579f3f9509fd660e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/uuid.h"
+          },
+          "hashes": {
+            "sha-256": "2ba36a6284be8767e7ae1d7d3a9b086a6c5f7db403a76a851449bc0a09705963"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/dependecies/glfw/include/glfw/glfw3.h"
+          },
+          "hashes": {
+            "sha-256": "0992a30f01ebaa41c32f3f0588e942961abb8a9a52ca8764bd32ee4d7d71a46d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/gamerenderer.h"
+          },
+          "hashes": {
+            "sha-256": "6a189a1eba3cbe696fb6c73bd41e4f06ff0d233e1a12b35cac9bfa5d1bd035b7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/gameobject.h"
+          },
+          "hashes": {
+            "sha-256": "d75f3c203d8c80c1084cf59af2ef62b778d2a4838bdc8b49d7d40402b7e21994"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/enums.h"
+          },
+          "hashes": {
+            "sha-256": "e638eb7f92c602019516f0bb3b1c01d161f25dab1a1c9c35eee3d402620861ae"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/physicscomponent.h"
+          },
+          "hashes": {
+            "sha-256": "e16367985edd099f4d716f235a3b264038ec5dbafeac68da5d0c463fd866cccf"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/gameobjecthandler.h"
+          },
+          "hashes": {
+            "sha-256": "439aa500ec4ab5fb00c3e7b01d20e988887c80ce1b10db0eac4bab21a7ba27fa"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/Arthr/source/repos/GameEngine/GameEngine/MovementComponent.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "b444e4c2fc090c63408d4856c2f6b7ff218099f1c8a7b2608f60fee3a8c724c7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/player.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "461edd42a1676f9d173a1a6fcb2a99ddf41bc6bf805b17945d5d1a719ca3dd08"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/player.h"
+          },
+          "hashes": {
+            "sha-256": "118f93dca1a79b99a04ee77ea41a263681bef3899a7cdba32c52e3953bc63a6d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/arthr/source/repos/gameengine/gameengine/circlecomponent.h"
+          },
+          "hashes": {
+            "sha-256": "af8728b6f78d9c45b4f242d1583c14bd30017006595962ca301bc629da7d58ae"
+          }
+        }
+      ]
+    }
+  ]
+}

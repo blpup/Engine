@@ -1,5 +1,7 @@
 #include "GameObjectHandler.h"
 #include "GameObject.h"
+#include "UUID.h"
+
 using namespace GameEngine;
 
 GameObjectHandler& GameObjectHandler::GetInstance()
@@ -8,9 +10,9 @@ GameObjectHandler& GameObjectHandler::GetInstance()
     return instance;
 }
 
-void GameObjectHandler::Add(GameObject* component)
+void GameObjectHandler::Add(GameObjectDef& component)
 {
-    m_objects.push_back(component);
+    m_objects.push_back(&component);
 }
 
 void GameObjectHandler::Remove(GameObject* component)
@@ -21,11 +23,23 @@ void GameEngine::GameObjectHandler::Render()
 {
     for (size_t i = 0; i < m_objects.size(); i++)
     {
-        m_objects[i]->Update();
+        //m_objects[i]->Update();
     }
 }
 
-std::vector<GameObject*> GameObjectHandler::GetObjects()
+size_t GameEngine::GameObjectHandler::GetGameObjectIndex(uint64_t id)
 {
-    return m_objects;
+    for (size_t i = 0; i < m_objects.size(); i++)
+    {
+        GameObject goWrapper(m_objects[i]);
+        if (goWrapper.GetID() == id)
+            return i;
+        
+    }
+    return -1;
+}
+
+GameObjectDef& GameEngine::GameObjectHandler::GetGameObject(size_t index)
+{
+    return *m_objects[index];
 }

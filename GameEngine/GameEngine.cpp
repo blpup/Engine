@@ -9,7 +9,7 @@
 #include "GameEngine.h"
 #include "GameObjectHandler.h"
 #include "GameTimeStep.h"
-#include "GameMovement.h"
+//#include "GameMovement.h"
 
 using namespace GameEngine;
 int main(void)
@@ -20,7 +20,7 @@ int main(void)
     GamePhysics& PhysicsSystem = GamePhysics::GetInstance();
     GameObjectHandler& ObjectHandler = GameObjectHandler::GetInstance();
     GameTimeStep& TimeStepSystem = GameTimeStep::GetInstance();
-    GameMovement& MovementSystem = GameMovement::GetInstance();
+    //GameMovement& MovementSystem = GameMovement::GetInstance();
     /* Initialize the library */
     if (!glfwInit())
         return -1;
@@ -30,7 +30,6 @@ int main(void)
     
     new Player();
     new Wall();
-    new Ball();
     if (!window)
     {
         glfwTerminate();

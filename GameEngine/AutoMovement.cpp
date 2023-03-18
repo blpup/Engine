@@ -4,5 +4,5 @@
 
 GameEngine::AutoMovement::AutoMovement(PhysicsComponent* component)
 {
-	component->GetObject().SetCoords(component->GetObject().GetCoords().x, component->GetObject().GetCoords().y - component->GetObject().GetSpeed());
+	//component->GetObject().SetCoords(component->GetObject().GetCoords().x, component->GetObject().GetCoords().y - component->GetObject().GetSpeed());
 }

@@ -135,6 +135,9 @@
     <ClCompile Include="AutoMovement.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
+    <ClCompile Include="StackAllocator.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector2.h">
@@ -223,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="AutoMovement.h">
       <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="StackAllocator.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

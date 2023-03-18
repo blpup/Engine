@@ -2,16 +2,15 @@
 #include "GameObject.h"
 
 namespace GameEngine {
-	class Ball : public GameObject
+	class Ball
 	{
 	public:
 		Ball();
-		void Update() override;
 	private:
-		class RenderComponent* renderComponent;
-		class CircleComponent* circleComponent;
-		class PhysicsComponent* physicsComponent;
-		class MovementComponent* movementComponent;
+		//class RenderComponent* renderComponent;
+		//class CircleComponent* circleComponent;
+		//class PhysicsComponent* physicsComponent;
+		//class MovementComponent* movementComponent;
 	};
 }
 

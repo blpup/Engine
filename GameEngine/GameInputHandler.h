@@ -1,6 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include "Enums.h"
+#include "MovementComponent.h"
 #include <vector>
 
 namespace GameEngine {
@@ -19,14 +20,14 @@ namespace GameEngine {
 			GetInstance().ButtonCallbackImpl(key, action);
 		}
 		void ButtonCallbackImpl(int key, int action);
-		void AddMovementComponent(class MovementComponent* component);
+		void Add(MovementDef* component);
 		Direction GetUserInput();
 		void Render();
 	private:
 		GameInputHandler(void) {}
 		GameInputHandler(GameInputHandler const&);
 		void operator=(GameInputHandler const&);
-		std::vector<MovementComponent*> Objects;
+		std::vector<MovementDef*> Objects;
 		Direction m_userInput;
 	};
 }

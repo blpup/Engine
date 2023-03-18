@@ -4,55 +4,93 @@
 #include "vector2.h"
 #include "RenderComponent.h"
 #include "MovementComponent.h"
+#include "GamePhysics.h"
 #include <vector>
 #include <iostream>
 #include <random>
-#include "GamePhysics.h"
+
 using namespace GameEngine;
 
 
-PhysicsComponent::PhysicsComponent(Collision collision, CollisionType type, float width, float height, GameObject& object)
-	: m_object(object), m_ID(object.GetID())
-{
-	GamePhysics& PhysicsSystem = GamePhysics::GetInstance();
-	m_physicsObject.m_collision = collision;
-	m_physicsObject.m_type = type;
-	m_physicsObject.m_width = width;
-	m_physicsObject.m_height = height;
-	
-	
-#if DEBUG_PHYSICS_COLLISION == 1
-	//For Physics debugging purposes to see the physics box rendered
-	Color3 color((float)rand()/(float)RAND_MAX, (float)rand() / (float)RAND_MAX, (float)rand() / (float)RAND_MAX);
-	BoxComponent* box = new BoxComponent(m_physicsObject.m_width,m_physicsObject.m_height);
-	RenderComponent* m_renderComponent = new RenderComponent(m_object.GetCoords(), color, box->GetVertices(), 2, GL_QUADS, m_object);
-#endif
-
-	PhysicsSystem.Add(this);
+PhysicsComponent::PhysicsComponent(const PhysicsObject* object)
+	: m_collision(object->collision), m_collisionType(object->collisionType),
+	m_width(object->width), m_height(object->height), m_velocity(object->velocity), m_move(object->move),
+	m_id(object->id), m_parentId(object->parentId)
+{}
+PhysicsComponent::PhysicsComponent(const PhysicsObject* object, uint64_t id)
+	: m_collision(object->collision), m_collisionType(object->collisionType),
+	m_width(object->width), m_height(object->height), m_velocity(object->velocity), m_move(object->move),
+	m_id(id)
+{}
+Collision PhysicsComponent::getCollision() {
+	return m_collision;
 }
 
-PhysicsObject& PhysicsComponent::GetPhysicsObject()
+void PhysicsComponent::setCollision(Collision value)
 {
-	return m_physicsObject;
+	m_collision = value;
 }
 
-void PhysicsComponent::UpdateCollision(Collision collision)
+CollisionType PhysicsComponent::getCollisionType()
 {
-	m_physicsObject.m_collision = collision;
+	return m_collisionType;
 }
 
-GameObject& GameEngine::PhysicsComponent::GetObject()
+void PhysicsComponent::setCollisionType(CollisionType value)
 {
-	return m_object;
+	m_collisionType = value;
 }
 
-Movablitiy PhysicsComponent::CanMove()
+Movablitiy PhysicsComponent::getMovablitiy()
 {
-	return m_physicsObject.m_move;
+	return m_move;
 }
 
-int GameEngine::PhysicsComponent::GetID()
+void PhysicsComponent::setMovablitiy(Movablitiy value)
 {
-	return m_ID;
+	m_move = value;
 }
+
+float PhysicsComponent::getHeight()
+{
+	return m_height;
+}
+
+void PhysicsComponent::setHeight(float value)
+{
+	m_height = value;
+}
+
+float PhysicsComponent::getWidth()
+{
+	return m_width;
+}
+
+void PhysicsComponent::setWidth(float value)
+{
+	m_width = value;
+}
+
+float PhysicsComponent::getVelocity()
+{
+	return m_velocity;
+}
+
+void PhysicsComponent::setVelocity(float value)
+{
+	m_velocity = value;
+}
+uint64_t PhysicsComponent::getID() {
+	return m_id;
+}
+void PhysicsComponent::instantiate(PhysicsObject* object) {
+	GamePhysics::GetInstance().Add(object);
+}
+uint64_t GameEngine::PhysicsComponent::getParentID()
+{
+	return m_parentId;
+}
+
+
+
 
