@@ -145,12 +145,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="AutoMovement.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Dispatcher.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Event.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameInputHandler.cpp" />
     <ClCompile Include="GameMovement.cpp" />
@@ -159,26 +162,32 @@
     <ClCompile Include="GamePhysics.cpp" />
     <ClCompile Include="GameRenderer.cpp" />
     <ClCompile Include="GameTimeStep.cpp" />
+    <ClCompile Include="Handler.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
+    <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PhysicsBounce.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="StkAllocator.cpp" />
     <ClCompile Include="StackAllocator.cpp" />
     <ClCompile Include="TriangleComponent.cpp" />
     <ClCompile Include="UUID.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Allocator.h" />
     <ClInclude Include="AutoMovement.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="Color3.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameInputHandler.h" />
     <ClInclude Include="GameMovement.h" />
@@ -187,14 +196,17 @@
     <ClInclude Include="GamePhysics.h" />
     <ClInclude Include="GameRenderer.h" />
     <ClInclude Include="GameTimeStep.h" />
+    <ClInclude Include="Handler.h" />
     <ClInclude Include="Minkowsi.h" />
     <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="PhysicsBounce.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shape.h" />
+    <ClInclude Include="StkAllocator.h" />
     <ClInclude Include="StackAllocator.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="TriangleComponent.h" />

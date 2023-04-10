@@ -13,7 +13,7 @@ namespace GameEngine {
 		GamePhysics(GamePhysics& other) = delete;
 		void operator=(const GamePhysics&) = delete;
 		static GamePhysics& GetInstance();
-		void Add(PhysicsObject* component);
+		void Add(PhysicsObject component);
 		void Remove(PhysicsObject* component);
 		void Render();
 		size_t GetPhysicsComponentIndex(int id);
@@ -24,9 +24,10 @@ namespace GameEngine {
 		float Bisection(float speed);
 		void CalculateNextStep();
 		int CheckCollision(float deltaX, float deltaY) const;
+		void DoCollisionSteps();
 		Vector2 CalculateDeltas();
 		Direction CollisionDirection(PhysicsObject* o1, PhysicsObject* o2) const;
-		std::vector<PhysicsObject*> Objects;
+		std::vector<PhysicsObject> Objects;
 		bool b_nextStepCollisionTriggered = false;
 		PhysicsObject* m_currentObject;
 		PhysicsObject* m_targetObject;

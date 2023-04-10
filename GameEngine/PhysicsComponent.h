@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "UUID.h"
-
+#include "Structs.h"
 namespace GameEngine {
 	enum class Collision {
 		CAN_COLLIDE,
@@ -10,24 +10,6 @@ namespace GameEngine {
 	enum class CollisionType {
 		SOLID,
 		BOUNCE
-	};
-	struct Movablitiy {
-		Movablitiy() {
-			forward = 1;
-			backward = 1;
-			left = 1;
-			right = 1;
-		}
-		Movablitiy(int f, int b, int l, int r) {
-			forward = f;
-			backward = b;
-			left = l;
-			right = r;
-		}
-		int forward;
-		int backward;
-		int left;
-		int right;
 	};
 
 	struct PhysicsObject {

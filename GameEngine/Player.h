@@ -9,8 +9,7 @@ namespace GameEngine {
 	{
 	public:
 		Player();
-	private:
-		class CircleComponent* circleComponent;
+		class BoxComponent* boxComponent;
 		GameObjectDef m_gameObject;
 		PhysicsObject m_physicsObject;
 		RenderObject m_renderObject;

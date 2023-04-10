@@ -80,11 +80,12 @@ void PhysicsComponent::setVelocity(float value)
 {
 	m_velocity = value;
 }
+
 uint64_t PhysicsComponent::getID() {
 	return m_id;
 }
 void PhysicsComponent::instantiate(PhysicsObject* object) {
-	GamePhysics::GetInstance().Add(object);
+	GamePhysics::GetInstance().Add(*object);
 }
 uint64_t GameEngine::PhysicsComponent::getParentID()
 {

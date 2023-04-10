@@ -32,7 +32,6 @@ namespace GameEngine {
 		Vector2 GetCoords() const;
 		void SetCoords(float x, float y);
 		uint64_t GetID() const;
-		virtual void OnCollide(GameObject* OtherObject, int direction);
 	private:
 		uint64_t m_id;
 		Vector2 m_position;

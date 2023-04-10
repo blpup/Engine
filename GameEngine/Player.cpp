@@ -1,7 +1,11 @@
 #include "Player.h"
 #include "GamePhysics.h"
-#include "CircleComponent.h"
+#include "RenderComponent.h"
+#include "BoxComponent.h"
 #include "PhysicsComponent.h"
+#include "MovementComponent.h"
+#include "GameInputHandler.h"
+#include "Vector2.h"
 #include <vector>
 
 using namespace GameEngine;
@@ -11,22 +15,24 @@ Player::Player()
 	RenderComponent renWrapper(&m_renderObject);
 	MovementComponent movWrapper(&m_movementObject);
 	PhysicsComponent phyWrapper(&m_physicsObject);
-	m_gameObject.position.SetVector2(0.2f, 0.2f);
-	circleComponent = new CircleComponent(.05f, goWrapper.GetCoords());
+	goWrapper.SetCoords(-0.9, 0);
+	m_gameObject.position = goWrapper.GetCoords();
+	boxComponent = new BoxComponent(.05f, .5f);
 	m_renderObject.parentId = m_gameObject.id;
 	m_movementObject.parentId = m_gameObject.id;
 	m_physicsObject.parentId = m_gameObject.id;
-	m_renderObject.color = Color3(0.f, 1.0f, 1.0f);
-	m_renderObject.vertices = circleComponent->GetVertices();
+	m_renderObject.color = Color3(0.f, 0.0f, 1.0f);
+	m_renderObject.vertices = boxComponent->GetVertices();
+	m_physicsObject.height = .5f;
+	m_physicsObject.width = .05f;
 	m_movementObject.keybindings =
-	{ 
-		Keybindings(Direction::UP,GLFW_KEY_W),
-		Keybindings(Direction::DOWN,GLFW_KEY_S),
-		Keybindings(Direction::LEFT,GLFW_KEY_A),
-		Keybindings(Direction::RIGHT,GLFW_KEY_D)
+	{
+		Keybindings(Direction::UP,GLFW_KEY_I),
+		Keybindings(Direction::DOWN,GLFW_KEY_K),
 	};
+	phyWrapper.instantiate(&m_physicsObject);
 	renWrapper.instantiate(&m_renderObject);
 	movWrapper.instantiate(&m_movementObject);
-	phyWrapper.instantiate(&m_physicsObject);
+	
 }
 

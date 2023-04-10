@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
+#include "Observer.h"
 
 using namespace GameEngine;
 GamePhysics& GamePhysics::GetInstance()
@@ -12,7 +13,7 @@ GamePhysics& GamePhysics::GetInstance()
 	static GamePhysics instance;
 	return instance;
 }
-void GamePhysics::Add(PhysicsObject* component)
+void GamePhysics::Add(PhysicsObject component)
 {
 	Objects.push_back(component);
 }
@@ -23,30 +24,27 @@ void GamePhysics::Remove(PhysicsObject* component)
 
 void GamePhysics::Render()
 {
-	GameInputHandler& InputHandle = GameInputHandler::GetInstance();
 	for (size_t i = 0; i < Objects.size(); i++)
 	{
-		m_currentObject = Objects[i];
+		m_currentObject = &Objects[i];
 		PhysicsComponent PhysicsObject1(m_currentObject);
 		if (PhysicsObject1.getCollision() != Collision::CAN_COLLIDE)
 			continue;
 
-		UpdateMovability(*m_currentObject, Direction::RESET);
 		for (size_t j = 0; j < Objects.size(); j++)
 		{
-			m_targetObject = Objects[j];
+			m_targetObject = &Objects[j];
 			PhysicsComponent PhysicsObject2(m_targetObject);
+
 			if (PhysicsObject1.getID() == PhysicsObject2.getID())
 				continue;
 			if (PhysicsObject2.getCollision() != Collision::CAN_COLLIDE)
 				continue;
 			
 			Vector2 deltas = CalculateDeltas();
-			UpdateMovability(*m_targetObject, Direction::RESET);
 			
 			if (CheckCollision(deltas.x, deltas.y)) {
-				UpdateMovability(*m_currentObject, CollisionDirection(m_currentObject, m_targetObject));
-				UpdateMovability(*m_targetObject, CollisionDirection(m_targetObject, m_currentObject));
+				DoCollisionSteps();
 			}
 			else {
 				b_nextStepCollisionTriggered = false;
@@ -63,7 +61,7 @@ size_t GamePhysics::GetPhysicsComponentIndex(int id)
 {
 	for (size_t i = 0; i < Objects.size(); i++)
 	{
-		if (PhysicsComponent(Objects[i]).getID() == id)
+		if (PhysicsComponent(&Objects[i]).getID() == id)
 			return i;
 	}
 	return -1;
@@ -73,8 +71,8 @@ PhysicsObject* GamePhysics::GetPhysicsObjectByParentId(uint64_t id)
 {
 	for (size_t i = 0; i < Objects.size(); i++)
 	{
-		if (PhysicsComponent(Objects[i]).getParentID() == id)
-			return Objects[i];
+		if (PhysicsComponent(&Objects[i]).getParentID() == id)
+			return &Objects[i];
 	}
 	return nullptr;
 }
@@ -90,6 +88,19 @@ int GamePhysics::CheckCollision(float deltaX, float deltaY) const
 		return 1;
 	}
 	return 0;
+}
+
+void GameEngine::GamePhysics::DoCollisionSteps()
+{
+	GameObjectHandler& ObjectHandler = GameObjectHandler::GetInstance();
+	PhysicsComponent PhysicsObject1(m_currentObject);
+
+	UpdateMovability(*m_currentObject, CollisionDirection(m_currentObject, m_targetObject));
+	UpdateMovability(*m_targetObject, CollisionDirection(m_targetObject, m_currentObject));
+
+	//Mock Event call. These eventuall needs to be replaced with a proper event handling system.
+	PhysicsSubject& PhysicsSubject = PhysicsSubject::GetInstance();
+	PhysicsSubject.Notify(ObjectHandler.GetGameObject(ObjectHandler.GetGameObjectIndex(PhysicsObject1.getParentID())));
 }
 
 Vector2 GamePhysics::CalculateDeltas()
@@ -176,7 +187,9 @@ void GamePhysics::CalculateNextStep()
 	PhysicsComponent PhysicsObject2(m_targetObject);
 	if (!CheckCollision(abs(deltas.x) - 0.01f, abs(deltas.y) - 0.01f)) return;
 	float distance = Bisection(0);
-	GameInputHandler& InputHandle = GameInputHandler::GetInstance();
+
 	PhysicsObject1.setVelocity(distance);
 	PhysicsObject2.setVelocity(distance);
+	m_currentObject->velocity = PhysicsObject1.getVelocity();
+	m_targetObject->velocity = PhysicsObject2.getVelocity();
 }

@@ -1,19 +1,21 @@
 #pragma once
-struct Movablitiy {
-	Movablitiy() {
-		forward = 1;
-		backward = 1;
-		left = 1;
-		right = 1;
-	}
-	Movablitiy(int f, int b, int l, int r) {
-		forward = f;
-		backward = b;
-		left = l;
-		right = r;
-	}
-	int forward;
-	int backward;
-	int left;
-	int right;
-};
+namespace GameEngine {
+	struct Movablitiy {
+		Movablitiy() {
+			up = 1;
+			down = 1;
+			left = 1;
+			right = 1;
+		}
+		Movablitiy(int f, int b, int l, int r) {
+			up = f;
+			down = b;
+			left = l;
+			right = r;
+		}
+		int up;
+		int down;
+		int left;
+		int right;
+	};
+}

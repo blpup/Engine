@@ -39,8 +39,3 @@ uint64_t GameObject::GetID() const
 {
 	return m_id;
 }
-
-void GameObject::OnCollide(GameObject* OtherObject, int direction)
-{
-	//std::cout << m_ID << std::endl;
-}

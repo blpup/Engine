@@ -49,7 +49,6 @@ void GameInputHandler::Render()
 	{
 		MovementComponent movWrapper(Objects[i]);
 		const int objectIndex = ObjectHandler.GetGameObjectIndex(movWrapper.getParentID());
-		PhysicsHandler.GetPhysicsObjectByParentId(movWrapper.getParentID())->move;
 		if (objectIndex < 0) {
 			continue;
 		};

@@ -12,6 +12,10 @@ namespace GameEngine {
 			x = xCoord;
 			y = yCoord;
 		}
+		void SetVector2(Vector2 other) {
+			x = other.x;
+			y = other.y;
+		}
 		Vector2 operator-(const Vector2& obj) {
 			Vector2 temp;
 			temp.x = x - obj.x;
