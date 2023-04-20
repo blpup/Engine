@@ -18,4 +18,6 @@ namespace GameEngine {
 		int left;
 		int right;
 	};
+	struct PlayerDefinition {};
+	struct Definition {};
 }

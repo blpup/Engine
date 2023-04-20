@@ -12,7 +12,7 @@ namespace GameEngine {
 		BOUNCE
 	};
 
-	struct PhysicsObject {
+	struct PhysicsObject : Definition {
 		//Defaults
 		PhysicsObject() {
 			collision = Collision::CAN_COLLIDE;

@@ -6,7 +6,6 @@
 #include "GameObject.h"
 #include "GameInputHandler.h"
 #include "GameRenderer.h"
-#include "GameEngine.h"
 #include "GameObjectHandler.h"
 #include "GameTimeStep.h"
 #include "Observer.h"
@@ -17,7 +16,7 @@ using namespace GameEngine;
 int main(void)
 {
     GLFWwindow* window;
-    GameInputHandler &InputHandle = GameInputHandler::GetInstance();
+    GameInputHandler& InputHandle = GameInputHandler::GetInstance();
     GameRenderer& RendererSystem = GameRenderer::GetInstance();
     GamePhysics& PhysicsSystem = GamePhysics::GetInstance();
     GameObjectHandler& ObjectHandler = GameObjectHandler::GetInstance();
@@ -35,14 +34,15 @@ int main(void)
     Player* player1 = new Player();
     Player* player2 = new Player();
     player2->m_gameObject.position.SetVector2(0.9, 0);
-    player1->m_movementObject.keybindings =
+    player2->m_movementObject.keybindings =
     {
-        Keybindings(Direction::UP,GLFW_KEY_W),
-        Keybindings(Direction::DOWN,GLFW_KEY_S),
+        Keybindings(Direction::UP,GLFW_KEY_I),
+        Keybindings(Direction::DOWN,GLFW_KEY_K),
      };
     Wall* TopWall = new Wall();
     Wall* BottomWall = new Wall();
     TopWall->m_gameObject.position.SetVector2(0, 1);
+
     if (!window)
     {
         glfwTerminate();

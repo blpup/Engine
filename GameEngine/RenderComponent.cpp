@@ -1,10 +1,9 @@
 #include "RenderComponent.h"
 #include "GameRenderer.h"
 #include "GameObject.h"
+#include "Entity.h"
 
 using namespace GameEngine;
-
-
 
 RenderComponent::RenderComponent(const RenderObject* object):
 	m_color(object->color), m_renderType(object->renderType), m_vertices(object->vertices), m_zIndex(object->zIndex),
@@ -71,6 +70,7 @@ void RenderComponent::setRenderType(GLenum value)
 
 void GameEngine::RenderComponent::instantiate(RenderObject* object)
 {
+	Entity::registerComponent(object->parentId, Entity::ComponentId::Render);
 	GameRenderer::GetInstance().Add(object);
 }
 

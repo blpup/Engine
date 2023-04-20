@@ -1,6 +1,7 @@
 #include "MovementComponent.h"
 #include "GameInputHandler.h"
 #include "GameObjectHandler.h"
+#include "Entity.h"
 
 using namespace GameEngine;
 
@@ -42,6 +43,7 @@ std::vector<Keybindings> MovementComponent::GetKeyBindings() const
 
 void MovementComponent::instantiate(MovementDef* object)
 {
+	Entity::registerComponent(object->parentId, Entity::ComponentId::Movement);
 	GameInputHandler::GetInstance().Add(object);
 }
 

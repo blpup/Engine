@@ -19,7 +19,11 @@ namespace GameEngine {
 		size_t GetPhysicsComponentIndex(int id);
 		PhysicsObject* GetPhysicsObjectByParentId(uint64_t id);
 	private:
-		GamePhysics(void){}
+		GamePhysics(void){
+			b_nextStepCollisionTriggered = false;
+			m_currentObject = nullptr;
+			m_targetObject = nullptr;
+		}
 		void UpdateMovability(struct PhysicsObject& object, Direction direction);
 		float Bisection(float speed);
 		void CalculateNextStep();
@@ -28,7 +32,7 @@ namespace GameEngine {
 		Vector2 CalculateDeltas();
 		Direction CollisionDirection(PhysicsObject* o1, PhysicsObject* o2) const;
 		std::vector<PhysicsObject> Objects;
-		bool b_nextStepCollisionTriggered = false;
+		bool b_nextStepCollisionTriggered;
 		PhysicsObject* m_currentObject;
 		PhysicsObject* m_targetObject;
 	};

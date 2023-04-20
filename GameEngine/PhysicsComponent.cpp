@@ -5,12 +5,12 @@
 #include "RenderComponent.h"
 #include "MovementComponent.h"
 #include "GamePhysics.h"
+#include "Entity.h"
 #include <vector>
 #include <iostream>
 #include <random>
 
 using namespace GameEngine;
-
 
 PhysicsComponent::PhysicsComponent(const PhysicsObject* object)
 	: m_collision(object->collision), m_collisionType(object->collisionType),
@@ -85,6 +85,7 @@ uint64_t PhysicsComponent::getID() {
 	return m_id;
 }
 void PhysicsComponent::instantiate(PhysicsObject* object) {
+	Entity::registerComponent(object->parentId, Entity::ComponentId::Physics);
 	GamePhysics::GetInstance().Add(*object);
 }
 uint64_t GameEngine::PhysicsComponent::getParentID()

@@ -25,11 +25,6 @@ Wall::Wall()
 	m_renderObject.vertices = boxComponent->GetVertices();
 	m_physicsObject.height = .02f;
 	m_physicsObject.width = 2.0f;
-	m_movementObject.keybindings =
-	{
-		Keybindings(Direction::UP,GLFW_KEY_I),
-		Keybindings(Direction::DOWN,GLFW_KEY_K),
-	};
 	renWrapper.instantiate(&m_renderObject);
 	movWrapper.instantiate(&m_movementObject);
 	phyWrapper.instantiate(&m_physicsObject);

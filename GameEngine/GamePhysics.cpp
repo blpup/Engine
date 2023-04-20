@@ -98,8 +98,8 @@ void GameEngine::GamePhysics::DoCollisionSteps()
 	UpdateMovability(*m_currentObject, CollisionDirection(m_currentObject, m_targetObject));
 	UpdateMovability(*m_targetObject, CollisionDirection(m_targetObject, m_currentObject));
 
-	//Mock Event call. These eventuall needs to be replaced with a proper event handling system.
 	PhysicsSubject& PhysicsSubject = PhysicsSubject::GetInstance();
+	//We need to notify both physics objects.
 	PhysicsSubject.Notify(ObjectHandler.GetGameObject(ObjectHandler.GetGameObjectIndex(PhysicsObject1.getParentID())));
 }
 

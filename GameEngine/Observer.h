@@ -36,15 +36,15 @@ namespace GameEngine {
 
 	class OnCollideObserver : public IObserver
 	{
-		using stdfunc_type = std::function<void(const GameObjectDef*)>;
+		using func = std::function<void(const GameObjectDef*)>;
 	public:
-		OnCollideObserver(stdfunc_type callback, uint64_t id);
+		OnCollideObserver(func callback, uint64_t id);
 		~OnCollideObserver() {};
 		void Update(const GameObjectDef& entity) override;
 		uint64_t GetID() const { return m_id;  };
 	private:
 		PhysicsSubject* m_subject;
-		stdfunc_type m_function;
+		func m_function;
 		uint64_t m_id;
 	};
 

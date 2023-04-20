@@ -14,6 +14,7 @@ namespace GameEngine {
 		PhysicsObject m_physicsObject;
 		RenderObject m_renderObject;
 		MovementDef m_movementObject;
+		PlayerDefinition m_playerObject;
 	};
 }
 
