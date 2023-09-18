@@ -14,15 +14,15 @@ using namespace GameEngine;
 
 PhysicsComponent::PhysicsComponent(const PhysicsObject* object)
 	: m_collision(object->collision), m_collisionType(object->collisionType),
-	m_width(object->width), m_height(object->height), m_velocity(object->velocity), m_move(object->move),
-	m_id(object->id), m_parentId(object->parentId)
+	m_width(object->width), m_height(object->height), m_move(object->move),
+	m_id(object->id), m_parentId(object->parentId), m_physicsType(object->physicsType)
 {}
 PhysicsComponent::PhysicsComponent(const PhysicsObject* object, uint64_t id)
 	: m_collision(object->collision), m_collisionType(object->collisionType),
-	m_width(object->width), m_height(object->height), m_velocity(object->velocity), m_move(object->move),
-	m_id(id)
+	m_width(object->width), m_height(object->height), m_move(object->move),
+	m_id(id), m_physicsType(object->physicsType)
 {}
-Collision PhysicsComponent::getCollision() {
+const Collision PhysicsComponent::getCollision() const {
 	return m_collision;
 }
 
@@ -31,7 +31,7 @@ void PhysicsComponent::setCollision(Collision value)
 	m_collision = value;
 }
 
-CollisionType PhysicsComponent::getCollisionType()
+const CollisionType PhysicsComponent::getCollisionType() const
 {
 	return m_collisionType;
 }
@@ -41,7 +41,7 @@ void PhysicsComponent::setCollisionType(CollisionType value)
 	m_collisionType = value;
 }
 
-Movablitiy PhysicsComponent::getMovablitiy()
+const Movablitiy PhysicsComponent::getMovablitiy() const
 {
 	return m_move;
 }
@@ -51,7 +51,7 @@ void PhysicsComponent::setMovablitiy(Movablitiy value)
 	m_move = value;
 }
 
-float PhysicsComponent::getHeight()
+const float PhysicsComponent::getHeight() const
 {
 	return m_height;
 }
@@ -61,7 +61,7 @@ void PhysicsComponent::setHeight(float value)
 	m_height = value;
 }
 
-float PhysicsComponent::getWidth()
+const float PhysicsComponent::getWidth() const
 {
 	return m_width;
 }
@@ -71,7 +71,7 @@ void PhysicsComponent::setWidth(float value)
 	m_width = value;
 }
 
-float PhysicsComponent::getVelocity()
+const float PhysicsComponent::getVelocity() const
 {
 	return m_velocity;
 }
@@ -81,16 +81,26 @@ void PhysicsComponent::setVelocity(float value)
 	m_velocity = value;
 }
 
-uint64_t PhysicsComponent::getID() {
+uint64_t PhysicsComponent::getID() const {
 	return m_id;
 }
 void PhysicsComponent::instantiate(PhysicsObject* object) {
 	Entity::registerComponent(object->parentId, Entity::ComponentId::Physics);
 	GamePhysics::GetInstance().Add(*object);
 }
-uint64_t GameEngine::PhysicsComponent::getParentID()
+uint64_t PhysicsComponent::getParentID() const
 {
 	return m_parentId;
+}
+
+void PhysicsComponent::setPhysicsType(PhysicsType value)
+{
+	m_physicsType = value;
+}
+
+const PhysicsType PhysicsComponent::getPhysicsType()
+{
+	return m_physicsType;
 }
 
 

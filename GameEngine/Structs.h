@@ -1,4 +1,5 @@
 #pragma once
+#include "Entity.h"
 namespace GameEngine {
 	struct Movablitiy {
 		Movablitiy() {
@@ -19,5 +20,13 @@ namespace GameEngine {
 		int right;
 	};
 	struct PlayerDefinition {};
-	struct Definition {};
+	struct Ground{};
+	struct RotationDefinition {
+		RotationDefinition() {
+			angle = 0;
+			parentId = 0;
+		}
+		float angle;
+		Entity::EntityId parentId;
+	};
 }

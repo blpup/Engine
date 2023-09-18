@@ -7,67 +7,25 @@ using namespace GameEngine;
 
 RenderComponent::RenderComponent(const RenderObject* object):
 	m_color(object->color), m_renderType(object->renderType), m_vertices(object->vertices), m_zIndex(object->zIndex),
-	m_parentId(object->parentId),m_id(object->id)
-{
+	m_parentId(object->parentId),m_id(object->id), m_verts(object->verts)
+{}
+std::vector<Vertex> RenderComponent::GenerateVertices() {
+	const float count = m_vertices.size() / 2;
+	unsigned int iCounter = 0;
+	for (size_t i = 0; i < count; i++)
+	{
+		Vertex vert;
+		vert.position[0] = m_vertices[iCounter];
+		vert.position[1] = m_vertices[iCounter + 1];
+		vert.position[2] = 1;
+		vert.color[0] = m_color.r;
+		vert.color[1] = m_color.g;
+		vert.color[2] = m_color.b;
+		m_verts.push_back(vert);
+		iCounter += 2;
+	}
+	return m_verts;
 }
-
-RenderComponent::RenderComponent(const RenderObject* object, uint64_t id):
-	m_color(object->color), m_renderType(object->renderType),
-	m_vertices(object->vertices), m_zIndex(object->zIndex), m_parentId(id)
-{
-}
-
-uint64_t RenderComponent::getID()
-{
-	return m_id;
-}
-
-Color3 RenderComponent::getColor()
-{
-	return m_color;
-}
-uint64_t GameEngine::RenderComponent::getParentID()
-{
-	return m_parentId;
-}
-void GameEngine::RenderComponent::setParentID(uint64_t value)
-{
-	m_parentId = value;
-	
-}
-void RenderComponent::setColor(Color3 value)
-{
-	m_color = value;
-}
-std::vector<float> RenderComponent::getVertices()
-{
-	return m_vertices;
-}
-
-void RenderComponent::setVertices(std::vector<float> value)
-{
-	m_vertices = value;
-}
-
-int RenderComponent::getZIndex()
-{
-	return m_zIndex;
-}
-
-void RenderComponent::setZIndex(int value)
-{
-	m_zIndex = value;
-}
-GLenum RenderComponent::getRenderType()
-{
-	return m_renderType;
-}
-
-void RenderComponent::setRenderType(GLenum value)
-{
-	m_renderType = value;
-}
-
 void GameEngine::RenderComponent::instantiate(RenderObject* object)
 {
 	Entity::registerComponent(object->parentId, Entity::ComponentId::Render);

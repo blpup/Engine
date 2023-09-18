@@ -2,13 +2,13 @@
 #include <iostream>
 
 using namespace GameEngine;
-GameObject::GameObject(const GameObjectDef* object):
+GameObject::GameObject(const GameObjectDefinition* object):
 	m_id(object->id),m_position(object->position)
 {
 
 }
 
-GameObject::GameObject(const GameObjectDef* object, uint64_t id):
+GameObject::GameObject(const GameObjectDefinition* object, uint64_t id):
 	m_id(id), m_position(object->position)
 {
 }
@@ -38,4 +38,10 @@ void GameObject::SetCoords(float x, float y)
 uint64_t GameObject::GetID() const
 {
 	return m_id;
+}
+
+void GameEngine::GameObject::instantiate(GameObjectDefinition& object)
+{
+	GameObjectHandler& ObjectHandler = GameObjectHandler::GetInstance();
+	GameObjectHandler::GetInstance().Add(object);
 }

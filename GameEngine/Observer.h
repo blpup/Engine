@@ -4,31 +4,16 @@
 #include "GameObject.h"
 
 namespace GameEngine {
-	enum class EventType {
-		EVENT_TYPE_LEVEL_STARTED,
-		EVENT_TYPE_PLAYER_SPAWNED,
-		EVENT_TYPE_ENEMY_SPOTTED,
-		EVENT_TYPE_EXPLOSION,
-		EVENT_TYPE_COLLISION
-	};
-	class ISubject;
 	class IObserver;
 	class PhysicsSubject;
 
-	class ISubject {
-	public:
-		virtual ~ISubject() {};
-		virtual void Attach(IObserver* observer) = 0;
-		virtual void Detach(IObserver* observer) = 0;
-		virtual void Notify(const GameObjectDef& entity) = 0;
-	};
 
 	class IObserver {
 		
 	public:
 		virtual ~IObserver() {};
-		IObserver();
-		virtual void Update(const GameObjectDef& entity) = 0;
+		IObserver() : m_sub(nullptr) {};
+		virtual void Update(const GameObjectDefinition& entity) = 0;
 		PhysicsSubject* m_sub;
 	};
 
@@ -36,11 +21,11 @@ namespace GameEngine {
 
 	class OnCollideObserver : public IObserver
 	{
-		using func = std::function<void(const GameObjectDef*)>;
+		using func = std::function<void(const GameObjectDefinition*)>;
 	public:
 		OnCollideObserver(func callback, uint64_t id);
 		~OnCollideObserver() {};
-		void Update(const GameObjectDef& entity) override;
+		void Update(const GameObjectDefinition& entity) override;
 		uint64_t GetID() const { return m_id;  };
 	private:
 		PhysicsSubject* m_subject;
@@ -53,7 +38,7 @@ namespace GameEngine {
 	public:
 		void Attach(OnCollideObserver observer);
 		void Detach(IObserver* observer);
-		void Notify(const GameObjectDef& entity);
+		void Notify(const GameObjectDefinition& otherEntity, const GameObjectDefinition& currentEntity);
 		static PhysicsSubject& GetInstance();
 		PhysicsSubject() {};
 		void operator=(const PhysicsSubject&) = delete;

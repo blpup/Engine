@@ -22,7 +22,7 @@ void GamePhysics::Remove(PhysicsObject* component)
 {
 }
 
-void GamePhysics::Render()
+void GamePhysics::Render(float dt)
 {
 	for (size_t i = 0; i < Objects.size(); i++)
 	{
@@ -35,24 +35,26 @@ void GamePhysics::Render()
 		{
 			m_targetObject = &Objects[j];
 			PhysicsComponent PhysicsObject2(m_targetObject);
+			b_nextStepCollisionTriggered = false;
 
 			if (PhysicsObject1.getID() == PhysicsObject2.getID())
 				continue;
 			if (PhysicsObject2.getCollision() != Collision::CAN_COLLIDE)
 				continue;
-			
-			Vector2 deltas = CalculateDeltas();
-			
-			if (CheckCollision(deltas.x, deltas.y)) {
-				DoCollisionSteps();
-			}
-			else {
-				b_nextStepCollisionTriggered = false;
+			MovementDefinition* ob1 = GameInputHandler::GetInstance().GetMovementDefinitionByParentID(m_currentObject->parentId);
+			MovementDefinition* ob2 = GameInputHandler::GetInstance().GetMovementDefinitionByParentID(m_targetObject->parentId);
+
+			if (!b_nextStepCollisionTriggered)
+				CalculateNextStep(dt);
+
+			if (!CheckCollision(CalculateDeltas().x, CalculateDeltas().y)) {
+				UpdateMovability(*m_currentObject, Direction::RESET);
+				continue;
 			}
 
-			if (!b_nextStepCollisionTriggered) {
-				CalculateNextStep();
-			}
+			DoCollisionSteps();
+
+
 		}
 	}
 }
@@ -82,11 +84,13 @@ int GamePhysics::CheckCollision(float deltaX, float deltaY) const
 {
 	PhysicsComponent PhysicsObject1(m_currentObject);
 	PhysicsComponent PhysicsObject2(m_targetObject);
+
 	float intersectX = deltaX - ((PhysicsObject1.getWidth() / 2) + (PhysicsObject2.getWidth() / 2));
 	float intersectY = deltaY - ((PhysicsObject1.getHeight() / 2) + (PhysicsObject2.getHeight() / 2));
-	if (intersectX < 0.0f && intersectY < 0.0f) {
+
+	if (intersectX < 0.0f && intersectY < 0.0f)
 		return 1;
-	}
+
 	return 0;
 }
 
@@ -94,22 +98,26 @@ void GameEngine::GamePhysics::DoCollisionSteps()
 {
 	GameObjectHandler& ObjectHandler = GameObjectHandler::GetInstance();
 	PhysicsComponent PhysicsObject1(m_currentObject);
+	PhysicsComponent PhysicsObject2(m_targetObject);
 
 	UpdateMovability(*m_currentObject, CollisionDirection(m_currentObject, m_targetObject));
 	UpdateMovability(*m_targetObject, CollisionDirection(m_targetObject, m_currentObject));
 
+
 	PhysicsSubject& PhysicsSubject = PhysicsSubject::GetInstance();
-	//We need to notify both physics objects.
-	PhysicsSubject.Notify(ObjectHandler.GetGameObject(ObjectHandler.GetGameObjectIndex(PhysicsObject1.getParentID())));
+	PhysicsSubject.Notify(ObjectHandler.GetGameObject(ObjectHandler.GetGameObjectIndex(PhysicsObject1.getParentID())), ObjectHandler.GetGameObject(ObjectHandler.GetGameObjectIndex(PhysicsObject2.getParentID())));
 }
 
 Vector2 GamePhysics::CalculateDeltas()
 {
 	GameObjectHandler& ObjectHandler = GameObjectHandler::GetInstance();
+
 	PhysicsComponent PhysicsObject1(m_currentObject);
 	PhysicsComponent PhysicsObject2(m_targetObject);
+
 	GameObject GameObject1(&ObjectHandler.GetGameObject(ObjectHandler.GetGameObjectIndex(PhysicsObject1.getParentID())));
 	GameObject GameObject2(&ObjectHandler.GetGameObject(ObjectHandler.GetGameObjectIndex(PhysicsObject2.getParentID())));
+
 	Vector2 diff = GameObject1.GetCoords() - GameObject2.GetCoords();
 	return Vector2(abs(diff.x), abs(diff.y));
 }
@@ -127,6 +135,7 @@ Direction GamePhysics::CollisionDirection(PhysicsObject* o1, PhysicsObject* o2) 
 	float top = abs((GameObject1.GetCoords().y + PhysicsObject1.getHeight() / 2) - (GameObject2.GetCoords().y - PhysicsObject2.getHeight() / 2));
 	float bottom = abs((GameObject1.GetCoords().y - PhysicsObject1.getHeight() /2) - (GameObject2.GetCoords().y + PhysicsObject2.getHeight() / 2));
 	float min = std::min({ right, left, top, bottom });
+
 	if (min == right) {
 		return Direction::RIGHT;
 	}
@@ -145,51 +154,50 @@ Direction GamePhysics::CollisionDirection(PhysicsObject* o1, PhysicsObject* o2) 
 void GamePhysics::UpdateMovability(struct PhysicsObject& object, Direction direction)
 {
 	PhysicsComponent phyWrapper(&object);
-	switch (int(direction))
+	switch (direction)
 	{
-	case 2:
-		phyWrapper.setMovablitiy(Movablitiy(1, 0, 1, 1));
-		object.move = phyWrapper.getMovablitiy();
+	case Direction::DOWN:
+		phyWrapper.setMovablitiy(Movablitiy(phyWrapper.getMovablitiy().up, 0, phyWrapper.getMovablitiy().left, phyWrapper.getMovablitiy().right));
 		break;
-	case 3:
-		phyWrapper.setMovablitiy(Movablitiy(1, 1, 0, 1));
-		object.move = phyWrapper.getMovablitiy();
+	case Direction::LEFT:
+		phyWrapper.setMovablitiy(Movablitiy(phyWrapper.getMovablitiy().up, phyWrapper.getMovablitiy().down, 0, phyWrapper.getMovablitiy().right));
 		break;
-	case 0:
-		phyWrapper.setMovablitiy(Movablitiy(0, 1, 1, 1));
-		object.move = phyWrapper.getMovablitiy();
+	case Direction::UP:
+		phyWrapper.setMovablitiy(Movablitiy(0, phyWrapper.getMovablitiy().down, phyWrapper.getMovablitiy().left, phyWrapper.getMovablitiy().right));
 		break;
-	case 1:
-		phyWrapper.setMovablitiy(Movablitiy(1, 1, 1, 0));
-		object.move = phyWrapper.getMovablitiy();
+	case Direction::RIGHT:
+		phyWrapper.setMovablitiy(Movablitiy(phyWrapper.getMovablitiy().up, phyWrapper.getMovablitiy().down, phyWrapper.getMovablitiy().left, 0));
 		break;
 	default:
 		phyWrapper.setMovablitiy(Movablitiy(1, 1, 1, 1));
-		object.move = phyWrapper.getMovablitiy();
 		break;
 	}
+	object.move = phyWrapper.getMovablitiy();
 }
 
 float GamePhysics::Bisection(float speed)
 {
-	Vector2 deltas = CalculateDeltas();
-
-	if (CheckCollision(abs(deltas.x) - speed, abs(deltas.y) - speed)) return speed;
-	Bisection((speed + 0.01f) / 2);
+	if (CheckCollision(abs(CalculateDeltas().x) - speed, abs(CalculateDeltas().y) - speed)) return speed;
+	Bisection((speed + 1.f) / 2);
 	b_nextStepCollisionTriggered = true;
-	
 }
 
-void GamePhysics::CalculateNextStep()
+void GamePhysics::CalculateNextStep(float dt)
 {
-	Vector2 deltas = CalculateDeltas();
-	PhysicsComponent PhysicsObject1(m_currentObject);
-	PhysicsComponent PhysicsObject2(m_targetObject);
-	if (!CheckCollision(abs(deltas.x) - 0.01f, abs(deltas.y) - 0.01f)) return;
-	float distance = Bisection(0);
+	MovementDefinition* ob1 = GameInputHandler::GetInstance().GetMovementDefinitionByParentID(m_currentObject->parentId);
+	MovementDefinition* ob2 = GameInputHandler::GetInstance().GetMovementDefinitionByParentID(m_targetObject->parentId);
+	if (CheckCollision(abs(CalculateDeltas().x) - (ob1->speed * dt *2), abs(CalculateDeltas().y) - (ob1->speed * dt *2)) == 0) return;
 
-	PhysicsObject1.setVelocity(distance);
-	PhysicsObject2.setVelocity(distance);
-	m_currentObject->velocity = PhysicsObject1.getVelocity();
-	m_targetObject->velocity = PhysicsObject2.getVelocity();
+	
+	//std::cout << (int)CollisionDirection(m_currentObject, m_targetObject) << " physics." << std::endl;
+	float distance = Bisection(0);
+	//std::cout << distance << " distance" << std::endl;
+	if (distance <= 0)
+	{
+		ob1->speed = ob1->maxSpeed;
+		ob2->speed = ob2->maxSpeed;
+		return;
+	}
+	ob1->speed = ob1->speed * distance;
+	ob2->speed = ob1->speed * distance;
 }

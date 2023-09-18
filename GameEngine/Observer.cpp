@@ -9,13 +9,13 @@ void GameEngine::PhysicsSubject::Detach(IObserver* observer)
 {
 }
 
-void GameEngine::PhysicsSubject::Notify(const GameObjectDef& entity)
+void GameEngine::PhysicsSubject::Notify(const GameObjectDefinition& otherEntity, const GameObjectDefinition& currentEntity)
 {
 	for (size_t i = 0; i < m_observers.size(); i++)
 	{
 		//Check if ids match to update apporiate components only
-		if(entity.id != m_observers[i].GetID())
-			m_observers[i].Update(entity);
+		if(currentEntity.id == m_observers[i].GetID())
+			m_observers[i].Update(otherEntity);
 	}
 }
 
@@ -30,12 +30,7 @@ GameEngine::OnCollideObserver::OnCollideObserver(func callback, uint64_t id){
 	m_id = id;
 }
 
-void GameEngine::OnCollideObserver::Update(const GameObjectDef& entity)
+void GameEngine::OnCollideObserver::Update(const GameObjectDefinition& entity)
 {
 	m_function(&entity);
-}
-
-GameEngine::IObserver::IObserver()
-{
-
 }

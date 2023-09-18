@@ -9,11 +9,14 @@ namespace GameEngine {
 	{
 	public:
 		Wall();
-		class BoxComponent* boxComponent;
-		GameObjectDef m_gameObject;
+		Wall(float w, float h);
+		std::unique_ptr<BoxComponent> boxComponent;
+		GameObjectDefinition m_gameObject;
 		PhysicsObject m_physicsObject;
 		RenderObject m_renderObject;
-		MovementDef m_movementObject;
+		MovementDefinition m_movementObject;
+	private:
+		void init();
 	};
 }
 

@@ -10,7 +10,7 @@ GameObjectHandler& GameObjectHandler::GetInstance()
     return instance;
 }
 
-void GameObjectHandler::Add(GameObjectDef& component)
+void GameObjectHandler::Add(GameObjectDefinition& component)
 {
     m_objects.push_back(&component);
 }
@@ -39,7 +39,7 @@ size_t GameEngine::GameObjectHandler::GetGameObjectIndex(uint64_t id)
     return -1;
 }
 
-GameObjectDef& GameEngine::GameObjectHandler::GetGameObject(size_t index)
+GameObjectDefinition& GameEngine::GameObjectHandler::GetGameObject(size_t index)
 {
     return *m_objects[index];
 }

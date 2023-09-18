@@ -22,5 +22,6 @@ namespace GameEngine {
 			temp.y = y - obj.y;
 			return temp;
 		}
+
 	};
 }

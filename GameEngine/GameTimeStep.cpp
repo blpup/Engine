@@ -1,4 +1,7 @@
 #include "GameTimeStep.h"
+#include <thread>
+#include <iostream>
+
 using namespace GameEngine;
 
 GameTimeStep& GameTimeStep::GetInstance()
@@ -9,21 +12,22 @@ GameTimeStep& GameTimeStep::GetInstance()
 
 void GameTimeStep::StartTimeStep()
 {
-	m_startTime = std::chrono::high_resolution_clock::now();
+	m_startTime = Clock::now();
+	
 }
 
 void GameTimeStep::EndTimeStep()
 {
-	m_endingTime = std::chrono::high_resolution_clock::now();
+	m_endingTime = Clock::now();
 	CalculateAverage();
 }
 
-float GameTimeStep::GetSecondsPerFrame()
+double GameTimeStep::GetSecondsPerFrame()
 {
 	return m_average;
 }
 
-float GameTimeStep::GetFPS()
+double GameTimeStep::GetFPS()
 {
 	return 1 / GetSecondsPerFrame();
 }
@@ -31,8 +35,8 @@ float GameTimeStep::GetFPS()
 void GameTimeStep::CalculateAverage()
 {
 	if (m_index == MAX_FRAMES) m_index = 0;
-	std::chrono::duration<float> diff = (m_endingTime - m_startTime);
-	m_steps[m_index] = diff.count();
+	auto diffInSeconds = std::chrono::duration<double>(m_endingTime - m_startTime).count();
+	m_steps[m_index] = diffInSeconds;
 	m_index += 1;
 	for (size_t i = 0; i < MAX_FRAMES; i++)
 	{
@@ -40,5 +44,4 @@ void GameTimeStep::CalculateAverage()
 	}
 	
 	m_average = m_average / MAX_FRAMES;
-
 }

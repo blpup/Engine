@@ -9,11 +9,10 @@ namespace GameEngine {
 	{
 	public:
 		Player();
-		class BoxComponent* boxComponent;
-		GameObjectDef m_gameObject;
+		GameObjectDefinition m_gameObject;
 		PhysicsObject m_physicsObject;
 		RenderObject m_renderObject;
-		MovementDef m_movementObject;
+		MovementDefinition m_movementObject;
 		PlayerDefinition m_playerObject;
 	};
 }

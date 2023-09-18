@@ -7,31 +7,23 @@
 #include <GLFW/glfw3.h>
 
 namespace GameEngine {
-	//This struct defines game objects to support DOD.
-	struct GameObjectDef {
-		//Defaults
-		GameObjectDef() {
-			position.SetVector2(0.f, 0.f);
-			GameObjectHandler& ObjectHandler = GameObjectHandler::GetInstance();
-			ObjectHandler.Add(*this);
-		};
+	struct GameObjectDefinition {
 		UUID id;
-		Vector2 position;
+		Vector2 position{0.f,0.f};
 	};
 
-	//A class to accompany the struct.
-	//Provides as a wrapper to help make any modifications to a provided game object.
 	class GameObject
 	{
 	public:
-		GameObject(const GameObjectDef* object);
-		GameObject(const GameObjectDef* object, uint64_t id);
+		GameObject(const GameObjectDefinition* object);
+		GameObject(const GameObjectDefinition* object, uint64_t id);
 		~GameObject();
 		virtual void Update();
 		virtual void Destroy();
 		Vector2 GetCoords() const;
 		void SetCoords(float x, float y);
 		uint64_t GetID() const;
+		void instantiate(GameObjectDefinition& object);
 	private:
 		uint64_t m_id;
 		Vector2 m_position;

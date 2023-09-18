@@ -131,7 +131,7 @@
         {
           "ruleId": "C26495",
           "message": {
-            "text": "Variable 'GameEngine::MovementDef::parentId' is uninitialized. Always initialize a member variable (type.6)."
+            "text": "Variable 'GameEngine::MovementDefinition::parentId' is uninitialized. Always initialize a member variable (type.6)."
           },
           "locations": [
             {
@@ -148,15 +148,15 @@
               },
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "GameEngine::MovementDef::{ctor}",
-                  "decoratedName": "??0MovementDef@GameEngine@@QEAA@XZ",
+                  "fullyQualifiedName": "GameEngine::MovementDefinition::{ctor}",
+                  "decoratedName": "??0MovementDefinition@GameEngine@@QEAA@XZ",
                   "kind": "function"
                 }
               ]
             }
           ],
           "properties": {
-            "targetSymbol": "GameEngine::MovementDef::parentId"
+            "targetSymbol": "GameEngine::MovementDefinition::parentId"
           }
         }
       ],

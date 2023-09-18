@@ -15,10 +15,25 @@ std::vector<float> Shape::GetVertices()
 	return m_vertices;
 }
 
+std::vector<unsigned int> GameEngine::Shape::GetIndicies()
+{
+	return m_indices;
+}
+
+std::vector<Vertex> GameEngine::Shape::GetVerts()
+{
+	return m_verts;
+}
+
 void Shape::SetVertices(std::vector<float> vertices)
 {
 	m_vertices = vertices;
 	CalculatePoints();
+}
+
+void GameEngine::Shape::SetIndices(std::vector<unsigned int> indices)
+{
+	m_indices = indices;
 }
 
 float* GameEngine::Shape::GetHighLowPoints()
@@ -38,7 +53,6 @@ float GameEngine::Shape::GetMaxHeight()
 
 float GameEngine::Shape::GetMaxWidth()
 {
-	std::cout << leftRightPoint[0] << " " << leftRightPoint[1] << " Width." << std::endl;
 	return leftRightPoint[0] - leftRightPoint[1];
 }
 

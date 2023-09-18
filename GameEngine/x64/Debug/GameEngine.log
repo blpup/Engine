@@ -1,9 +1,2 @@
-﻿  Ball.cpp
-  GameEngine.cpp
-C:\Users\Arthr\source\repos\GameEngine\GameEngine\GameEngine.cpp(36,53): warning C4305: 'argument': truncation from 'double' to 'float'
-  GamePhysics.cpp
-  Observer.cpp
-  Generating Code...
-C:\Users\Arthr\source\repos\GameEngine\GameEngine\GamePhysics.cpp(181): warning C4715: 'GameEngine::GamePhysics::Bisection': not all control paths return a value
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  GameEngine.vcxproj -> C:\Users\Arthr\source\repos\GameEngine\x64\Debug\GameEngine.exe
+﻿  ImageLoader.cpp
+  GameEngine.vcxproj -> C:\Users\Arthr\source\repos\GamJam\x64\Debug\GameEngine.exe

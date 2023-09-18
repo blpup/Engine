@@ -116,13 +116,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependecies/GLFW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependecies/GLFW/include;$(SolutionDir)Dependecies/GLM/glm-0.9.9.8;$(SolutionDir)Dependecies/glad/include;$(SolutionDir)Dependecies/glew/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependecies/GLFW/lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependecies/GLFW/lib-vc2022;$(SolutionDir)Dependecies/glew/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32.lib;glew32s.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -133,22 +133,21 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependecies/GLFW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependecies/GLFW/include;$(SolutionDir)Dependecies/GLM/glm-0.9.9.8;$(SolutionDir)Dependecies/glad/include;$(SolutionDir)Dependecies/glew/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependecies/GLFW/lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependecies/GLFW/lib-vc2022;$(SolutionDir)Dependecies/glew/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32.lib;glew32s.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameInputHandler.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -156,22 +155,26 @@
     <ClCompile Include="GamePhysics.cpp" />
     <ClCompile Include="GameRenderer.cpp" />
     <ClCompile Include="GameTimeStep.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
+    <ClCompile Include="ResourceHandler.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="TriangleComponent.cpp" />
     <ClCompile Include="UUID.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Downloads\stb_image.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="Color3.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GameInputHandler.h" />
@@ -180,17 +183,26 @@
     <ClInclude Include="GamePhysics.h" />
     <ClInclude Include="GameRenderer.h" />
     <ClInclude Include="GameTimeStep.h" />
+    <ClInclude Include="ImageLoader.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ResourceHandler.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Shape.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="TriangleComponent.h" />
     <ClInclude Include="UUID.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>

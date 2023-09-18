@@ -20,15 +20,15 @@ namespace GameEngine {
 			GetInstance().ButtonCallbackImpl(key, action);
 		}
 		void ButtonCallbackImpl(int key, int action);
-		void Add(MovementDef* component);
-		Direction GetUserInput();
-		void Render();
+		void Add(MovementDefinition* component);
+		void Render(float dt);
+		MovementDefinition* GetMovementDefinitionByParentID(uint64_t id);
+		void Integrate(float dt, MovementDefinition* definition);
 	private:
 		GameInputHandler(void) {}
 		GameInputHandler(GameInputHandler const&);
 		void operator=(GameInputHandler const&);
-		std::vector<MovementDef*> Objects;
-		Direction m_userInput;
+		std::vector<MovementDefinition*> Objects;
 	};
 }
 

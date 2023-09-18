@@ -5,6 +5,7 @@
 #include "PhysicsComponent.h"
 
 namespace GameEngine {
+	#define GRAVITY 0.0098
 	class PhysicsComponent;
 
 	class GamePhysics
@@ -15,7 +16,7 @@ namespace GameEngine {
 		static GamePhysics& GetInstance();
 		void Add(PhysicsObject component);
 		void Remove(PhysicsObject* component);
-		void Render();
+		void Render(float dt);
 		size_t GetPhysicsComponentIndex(int id);
 		PhysicsObject* GetPhysicsObjectByParentId(uint64_t id);
 	private:
@@ -26,7 +27,7 @@ namespace GameEngine {
 		}
 		void UpdateMovability(struct PhysicsObject& object, Direction direction);
 		float Bisection(float speed);
-		void CalculateNextStep();
+		void CalculateNextStep(float dt);
 		int CheckCollision(float deltaX, float deltaY) const;
 		void DoCollisionSteps();
 		Vector2 CalculateDeltas();

@@ -11,24 +11,20 @@ namespace GameEngine {
 		SOLID,
 		BOUNCE
 	};
+	enum class PhysicsType {
+		STATIC,
+		WORLD
+	};
 
-	struct PhysicsObject : Definition {
-		//Defaults
-		PhysicsObject() {
-			collision = Collision::CAN_COLLIDE;
-			collisionType = CollisionType::SOLID;
-			width = 0.1f;
-			height = 0.1f;
-			velocity = 0.0f;
-		}
-		Collision collision;
-		CollisionType collisionType;
-		Movablitiy move;
-		float width;
-		float velocity;
-		float height;
+	struct PhysicsObject {
 		UUID id;
-		uint64_t parentId;
+		uint64_t parentId = NULL;
+		float width = 0.1f;
+		float height = 0.1f;
+		Collision collision = Collision::CAN_COLLIDE;
+		CollisionType collisionType = CollisionType::SOLID;;
+		PhysicsType physicsType= PhysicsType::STATIC;
+		Movablitiy move;
 	};
 
 	class PhysicsComponent
@@ -37,29 +33,33 @@ namespace GameEngine {
 		PhysicsComponent(const PhysicsObject* object);
 		PhysicsComponent(const PhysicsObject* object, uint64_t id);
 		void instantiate(PhysicsObject* object);
-		Collision getCollision();
+		const Collision getCollision() const;
 		void setCollision(Collision value);
-		CollisionType getCollisionType();
+		const CollisionType getCollisionType() const;
 		void setCollisionType(CollisionType value);
-		Movablitiy getMovablitiy();
+		const Movablitiy getMovablitiy() const;
 		void setMovablitiy(Movablitiy value);
-		float getWidth();
+		const float getWidth() const;
 		void setWidth(float value);
-		float getHeight();
+		const float getHeight() const;
 		void setHeight(float value);
-		float getVelocity();
+		const float getVelocity() const;
 		void setVelocity(float  value);
-		uint64_t getID();
-		uint64_t getParentID();
+		uint64_t getID() const;
+		uint64_t getParentID() const;
+		void setPhysicsType(PhysicsType value);
+		const PhysicsType getPhysicsType();
 	private:
+		uint64_t m_id;
+		uint64_t m_parentId;
 		Collision m_collision;
 		CollisionType m_collisionType;
+		PhysicsType m_physicsType;
 		Movablitiy m_move;
 		float m_width;
 		float m_height;
 		float m_velocity;
-		uint64_t m_id;
-		uint64_t m_parentId;
+
 	};
 }
 
